@@ -1,11 +1,43 @@
-import React from 'react'
+// import Footer from "./components/Footer";
+// import Header from "./components/Header";
+// import { Container } from "react-bootstrap";
+// import { Outlet } from "react-router-dom";
+
+// function App() {
+//   return (
+//     <>
+//       <Header />
+//       <main className="py-3">
+//         <Container>
+//           <Outlet />
+//         </Container>
+//       </main>
+//       <Footer/>
+//     </>
+//   );
+// }
+
+// export default App;
+
+
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import { Container } from "react-bootstrap";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <h2>Wecome to my eCommerce Application!!</h2>
-    </div>
-  )
+    <>
+      <Header /> 
+      <main className="py-3">
+        <Container>
+          <Outlet />
+        </Container>
+      </main>
+      <Footer />
+    </>
+  );
 }
 
-export default App
+export default App;
+
