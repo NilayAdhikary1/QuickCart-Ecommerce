@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import products from "../products";
 import { Card, Col, Container, Row, Image, Button } from "react-bootstrap";
 import { LuIndianRupee } from "react-icons/lu";
 import Ratings from "../components/Ratings";

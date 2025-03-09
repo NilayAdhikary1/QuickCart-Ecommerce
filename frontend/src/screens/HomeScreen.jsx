@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import Product from "../components/Product";
-import axios from "axios";
-// import { getProducts } from "../services/GetServices";
+import { getProducts } from "../services/GetServices";
 
 function HomeScreen() {
 
@@ -10,7 +9,7 @@ function HomeScreen() {
 
   const fetchProducts = async () => {
     try {
-      const products = await axios.get('/products');
+      const products = await getProducts();
       console.log(products);
       setProducts(products.data);
     } catch (error) {
