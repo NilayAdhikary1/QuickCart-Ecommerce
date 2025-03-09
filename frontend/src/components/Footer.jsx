@@ -9,11 +9,7 @@ function Footer() {
       <Container>
         <Row className="py-3">
           <Col className="text-center">
-            <p>
-              <h6>
-                &copy;{currentYear} www.quickcart.com. All rights reserved.
-              </h6>
-            </p>
+            <h6>&copy;{currentYear} www.quickcart.com. All rights reserved.</h6>
           </Col>
         </Row>
       </Container>

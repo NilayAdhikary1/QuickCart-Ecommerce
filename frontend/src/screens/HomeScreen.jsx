@@ -11,10 +11,7 @@ function HomeScreen() {
         {products.map((prod) => (
           <Col key={prod._id} sm={12} md={6} lg={4} xl={3}>
             <Product
-              name={prod.name}
-              image={prod.image}
-              price={prod.price}
-              prodId={prod._id}
+              product = {prod}
             />
           </Col>
         ))}

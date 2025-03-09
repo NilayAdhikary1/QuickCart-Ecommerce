@@ -1,0 +1,93 @@
+main {
+  min-height: 80vh;
+}
+
+.rating-text {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* This part is to design the star ratings... */
+.star-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+}
+
+.star-wrapper .empty-star {
+  color: lightgray;
+  position: absolute;
+}
+
+.star-wrapper .filled-star {
+  color: green;
+  position: absolute;
+}
+
+
+/* To make a box around the star and ratings in prduct-details page */
+.card-styles {
+  margin-top: 12px;
+  width: 12rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles for In stock or Out of Stock */
+.in-stock-out-of-stock{
+  margin-top: 12px;
+  width: 8rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;  /* Centers vertically */
+  justify-content: center; /* Centers horizontally */
+  text-align: center;
+  font-weight: 500;
+}
+.in-stock{
+  background-color: rgb(227, 245, 239);
+}
+.out-of-stock{
+  background-color: #f5e7e7;
+}
+
+
+/* This is to put ellipsis to wrap the content in home screen */
+.product-title {
+  height: auto;
+  overflow: hidden; /* Hide overflow content */
+  text-overflow: ellipsis; /* Add ellipsis for long text */
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+table td,
+table th {
+  text-align: center;
+}
+
+.review {
+  margin-top: 30px;
+}
+
+.review h2 {
+  font-size: 24px;
+  background: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.review button {
+  margin-top: 10px;
+}
+
+.carousel-caption {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
