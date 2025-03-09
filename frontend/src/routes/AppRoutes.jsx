@@ -11,7 +11,7 @@ function AppRoutes() {
         <Route path="/" element={ <App />}>
           <Route path="" element = {<HomeScreen />} />
           {/* Add more child routes here */}
-          <Route path="product/:productId"  element = {<ProductDetails />} />
+          <Route path="products/:productId"  element = {<ProductDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>

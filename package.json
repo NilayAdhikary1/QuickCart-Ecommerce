@@ -5,15 +5,19 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon backend/server.js",
-    "start": "nodemon backend/server.js"
+    "server": "nodemon backend/server.js",
+    "client": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "author": "Nilay Adhikary",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
+    "dotenv": "^16.4.7",
     "nodemon": "^3.1.9"
   }
 }

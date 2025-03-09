@@ -4,12 +4,28 @@ import { Card, Col, Container, Row, Image, Button } from "react-bootstrap";
 import { LuIndianRupee } from "react-icons/lu";
 import Ratings from "../components/Ratings";
 import { FiShoppingBag } from "react-icons/fi";
+import { useState } from "react";
+import { getSelectedProduct } from "../services/GetServices";
 
 function ProductDetails() {
+  const [fetchedProduct, setFetchedProduct] = useState({});
+
   const params = useParams();
   const prodId = params.productId;
 
-  const fetchedProduct = products.find((prod) => prod._id == prodId);
+  const getSingleProduct = async () => {
+    try {
+      const prod = await getSelectedProduct(prodId);
+      console.log(prod);
+      setFetchedProduct(prod.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useState(() => {
+    getSingleProduct();
+  })
 
   return (
     <>
