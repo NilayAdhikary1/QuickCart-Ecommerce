@@ -18,7 +18,7 @@ function Product({ product }) {
         <Ratings numReviews={product.numReviews} rating={product.rating}/>
         <Card.Text as={"h3"}>
           <LuIndianRupee />
-          {product.price}
+          {product.price.toLocaleString("en-IN")}
         </Card.Text>
       </Card.Body>
     </Card>

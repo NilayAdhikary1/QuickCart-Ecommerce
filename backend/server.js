@@ -2,6 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import products from './data/products.js';
 import cors from 'cors';
+import { connectDb } from './util/database.js'
 
 const port = process.env.PORT;
 
@@ -25,6 +26,17 @@ app.get('/products/:productId', (req, res, next) => {
 })
 
 
-app.listen(port, () => {
-    console.log(`Server is up and running on port ${port}`);
-})
+// DONT CONNECT MONGODB MANUALLY. DO IT WITH THE HELP OF MONGOOSE...................
+
+// mongoConnect(() => {
+//     app.listen(port, () => {
+//         console.log(`Server is up and running on port ${port}`);
+//     })
+// })
+
+connectDb(() => {
+    app.listen(port, () => {
+        console.log(`Server is up and running on port ${port}`);
+    });
+});
+
