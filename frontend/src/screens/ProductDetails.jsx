@@ -51,7 +51,8 @@ function ProductDetails() {
             <div className="d-flex align-items-center">
               <h3>
                 <LuIndianRupee />
-                {fetchedProduct.price}
+                {" "}
+                {fetchedProduct.price && fetchedProduct.price.toLocaleString("en-IN")}
               </h3>
               <p className="mx-2 fw-bold text-success">
                 inclusive of all taxes

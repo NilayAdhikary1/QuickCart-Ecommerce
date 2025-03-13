@@ -1,17 +1,18 @@
 import mongoose from "mongoose";
+import 'dotenv/config';
 
 export const connectDb = async (callback) => {
     try {
         const conn = await mongoose.connect(process.env.MONGO_URI);
         console.log(`MongoDB connected to : ${conn.connection.name}`);
-        callback();
+        callback(); // this callback is for connecting server...
     } catch (error) {
         console.error('Error connecting to MongoDB:', error);
         // process.exit(1); //forcing the Node.js process to stop instead of continuing with a broken state...
 
         // Retry connection after 5 seconds instead of exiting...
         setTimeout(() => {
-            connectDb(path, callback);
+            connectDb(callback);
         }, 5000);
     }
 }
