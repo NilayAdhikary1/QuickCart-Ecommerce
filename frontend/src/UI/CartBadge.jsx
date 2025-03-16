@@ -1,5 +1,4 @@
 import { Badge } from "react-bootstrap";
-import "./cartBadge.css";
 
 function CartBadge({ numberOfCartItems }) {
   return (

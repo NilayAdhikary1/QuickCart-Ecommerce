@@ -92,6 +92,35 @@ table th {
   background: rgba(0, 0, 0, 0.5);
 }
 
+.custom-cart-badge {
+  position: absolute;
+  top: 10%;
+  left: 85%; /* Default for large screens */
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 992px) {
+  /* For medium screens (md) */
+  .custom-cart-badge {
+    left: 52%;
+  }
+}
+
+@media (max-width: 768px) {
+  /* For small screens (sm) */
+  .custom-cart-badge {
+    left: 53%;
+  }
+}
+
+@media (max-width: 576px) {
+  /* For extra small screens (xs) */
+  .custom-cart-badge {
+    left: 53%;
+  }
+}
+
+
 .increase-decrease-cart-items{
    width: 30px;
    height: 30px;
