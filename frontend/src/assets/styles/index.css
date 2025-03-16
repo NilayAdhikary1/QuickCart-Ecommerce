@@ -91,3 +91,15 @@ table th {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
 }
+
+.increase-decrease-cart-items{
+   width: 30px;
+   height: 30px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.on-hover-product-name:hover{
+  color: blue;
+}

@@ -4,8 +4,9 @@
 
 const asyncHandler = (func) =>
   function asyncFn(req, res, next) {
-    // Since func is async, it returns a Promise.
+    // Since func is an async function and we have not used 'await' keyword, it returns a Promise.
     // That Promise is stored in funcReturn.
+    // But if we would have used await(as we generally do in async-await format), then funcReturn would store the data the itself after resolving.
     const funcReturn = func(req, res, next); 
 
     
