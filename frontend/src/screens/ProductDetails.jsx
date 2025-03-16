@@ -5,7 +5,7 @@ import { LuIndianRupee } from "react-icons/lu";
 import Ratings from "../components/Ratings";
 import { FiShoppingBag } from "react-icons/fi";
 import { useGetSelectedProductQuery } from "../store/slices/productsSlice";
-import Loader from "../components/Loader";
+import Loader from "../UI/Loader";
 import ErrorScreen from "./ErrorScreen";
 import { addToCart } from "../store/slices/cartSlice";
 

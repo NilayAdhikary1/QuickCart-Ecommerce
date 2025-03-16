@@ -2,7 +2,7 @@ import { Col, Row, Spinner } from "react-bootstrap";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../store/slices/productsSlice";
 import ErrorScreen from "../screens/ErrorScreen";
-import Loader from "../components/Loader";
+import Loader from "../UI/Loader";
 
 function HomeScreen() {
   // Here I have used React RTK Queries to get the products from database instead of Axios...
