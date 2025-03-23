@@ -38,7 +38,6 @@ export const cartSlice = createSlice({
           (item) => item._id != _id
         );
       }
-
       updateCart(state);
     },
   },

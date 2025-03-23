@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import 'dotenv/config';
 
 export const connectDb = async (callback) => {
     try {
@@ -16,7 +15,6 @@ export const connectDb = async (callback) => {
         }, 5000);
     }
 }
-
 
 // ---------------------------------------------------------------------------------------
 // NO NEED TO MANUALLY CONNECT MONGODB ANYMORE. JUST USE MONGOOSE...

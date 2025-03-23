@@ -1,16 +1,16 @@
 
 // • notFound only runs when no previous middleware/route matches the request(e.g. /random)
-// • If a route is matched but an error occurs, asyncHandler and errorHandler handle it before notFound is reached.
-// • next(error) inside notFound is correct because it ensures all errors go through the centralized errorHandler.
+// • If a route is matched but an error occurs, asyncHandler and errorHandler handle it before notFound is even reached.
+// • next(error) inside notFound is correct because it ensures all errors go through the centralized 'errorHandler'.
 
 
 // It only runs when no routes matches the given route................
 const notFound = (req, res, next) => {
   const error = new Error(`Not found - ${req.originalUrl}`);
+  console.log(error);
   res.status(404);
   next(error);
 };
-
 
 //we may throw error error from anywhere like throw new Error("..."). In that case if it is 200, then set it to 500 else set that as it is...
 

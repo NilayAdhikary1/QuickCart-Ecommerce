@@ -1,7 +1,13 @@
-import React from "react";
 import { Button, Card } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 
 function CartPrice({ cart }) {
+  const navigate = useNavigate();
+
+  function proceedToCheckOutHandler(){
+    navigate('/login?')
+  }
+
   return (
     <Card className="border-0 mt-2 shadow-sm">
       <Card.Header className="fw-bold bg-light">PRICE DETAILS</Card.Header>
@@ -27,7 +33,7 @@ function CartPrice({ cart }) {
           </span>
         </div>
 
-        {/* ...........Total Cart Amount.......... */}
+        {/* ...........Total Cart Amount And Place Your Order.......... */}
         <hr />
         <div className="d-flex justify-content-between fw-bold fs-5 mb-4">
           <span>Total Amount</span>
@@ -36,6 +42,7 @@ function CartPrice({ cart }) {
 
         <div className="d-grid">
           <Button
+          onClick={proceedToCheckOutHandler}
             style={{
               backgroundColor: "rgb(235, 54, 93)",
               borderColor: "rgb(235, 54, 93)",
