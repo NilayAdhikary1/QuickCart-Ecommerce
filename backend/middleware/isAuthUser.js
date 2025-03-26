@@ -2,8 +2,8 @@
 // If no token is attactched then we just simply reject the request as the user is not authenticated...
 
 import jwt from "jsonwebtoken";
-import { User } from "../models/UserModel";
-import asyncHandler from "./asyncHandler";
+import { User } from "../models/UserModel.js";
+import asyncHandler from "./asyncHandler.js";
 
 // APPROACH-1 (FOR JWT STORED IN BROWSER):===========================================
 // export const veriryToken = (req, res, next) => {
@@ -35,32 +35,36 @@ import asyncHandler from "./asyncHandler";
 // };
 
 // APPROACH-2 (FOR JWT STORED IN HTTP-ONLY COOKIE):=====================================
-export const isAuth = asyncHandler(async (req, res, next) => {
+export const isAuthUser = asyncHandler(async (req, res, next) => {
   const token = req.cookies?.jwt;
   if (!token) {
     res.status(401);
     throw new Error("No token!! User is not authorised...!!");
   }
 
+  // ✅ this try-catch handles JWT errors explicitly...
+  let decodedToken;
   try {
     // if there is a token, verify it...
-    const decodedToken = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
-
-    // Since the token contains userId, so get that user from database based on the userId...
-    // Here we exclue the field password field from the userDoc due to sensitive information..
-    // We should not include sensitive info in the cookie...
-    const userDoc = await User.findById(decodedToken.userId).select(
-      "-password"
-    );
-    if (!userDoc) {
-      res.status(404);
-      throw new Error("User Not Found...!!");
-    }
-
-    req.user = userDoc; // attach the user object to the request...
-    next(); // Proceed to the next middleware or route handler
-  } catch (err) {
+    decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  } catch (error) {
     res.status(403);
-    throw new Error("Invalid token. Access forbidden...!!");
+    throw new Error("Invalid token. Access forbidden!");
   }
+
+  // ✅ Async errors (handled by asyncHandler middleware)
+  // Since the token contains userId, so get that user from database based on the userId...
+  // Here we exclue the field password field from the userDoc due to sensitive information..
+  // We should not include sensitive info in the cookie...
+  const userDoc = await User.findById(decodedToken.userId).select("-password");
+
+  // if (!userDoc) is necessary to ensure the token belongs to an active user. There might be a case where a valid JWT belong to a user who was deleted from the database. If you don’t check this, your app might try to process a non-existent user, leading to unexpected errors.
+
+  if (!userDoc) {
+    res.status(404);
+    throw new Error("User Not Found...!!");
+  }
+
+  req.user = userDoc; // attach the user object to the request...
+  next(); // Proceed to the next middleware or route handler
 });
