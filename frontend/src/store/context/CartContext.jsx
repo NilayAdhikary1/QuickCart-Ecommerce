@@ -29,39 +29,46 @@ export default function CartContextProvider({ children }) {
 
   const addItemToCart = (item) => {
     setCart((prevCart) => {
-      const updatedCart = { ...prevCart };
-      const existingCartItemIndex = updatedCart.cartItems.findIndex(
+      const existingCartItemIndex = prevCart.cartItems.findIndex(
         (cartItem) => cartItem._id === item._id
       );
+
+      let updatedCartItems;
       if (existingCartItemIndex === -1) {
-        //MEANS THE ITEM IS NOT PRESENT IN THE ARRAY...
-        updatedCart.cartItems.push(item);
+        updatedCartItems = [...prevCart.cartItems, { ...item, quantity: 1 }];
       } else {
-        //MEANS THE ITEM IS ALREADY PRESENT IN THE ARRAY. SO JUST INCREASE IT'S QUANTITY...
-        updatedCart.cartItems[existingCartItemIndex].quantity += 1;
+        updatedCartItems = prevCart.cartItems.map((cartItem, index) =>
+          index === existingCartItemIndex
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
       }
-      return updateCart(updatedCart);
+
+      return updateCart({ ...prevCart, cartItems: updatedCartItems });
     });
   };
 
   const decreaseItemFromCart = (id) => {
     setCart((prevCart) => {
-      const updatedCart = { ...prevCart };
-      const existingCartItemIndex = updatedCart.cartItems.findIndex(
+      const existingCartItemIndex = prevCart.cartItems.findIndex(
         (item) => item._id === id
       );
-      updatedCart.cartItems[existingCartItemIndex].quantity -= 1;
-      return updateCart(updatedCart);
+      const updatedCartItems = prevCart.cartItems.map((cartItem, index) =>
+        index === existingCartItemIndex
+          ? { ...cartItem, quantity: cartItem.quantity - 1 }
+          : cartItem
+      );
+      return updateCart({ ...prevCart, cartItems: updatedCartItems });
     });
   };
 
   const removeItemFromCart = (id) => {
     setCart((prevCart) => {
-      const updatedCart = { ...prevCart };
-      const newItemsArr = updatedCart.cartItems.filter(
-        (item) => item._id !== id
-      );
-      return updateCart(newItemsArr);
+      const updatedCart = {
+        ...prevCart,
+        cartItems: prevCart.cartItems.filter((item) => item._id !== id),
+      };
+      return updateCart(updatedCart);
     });
   };
 

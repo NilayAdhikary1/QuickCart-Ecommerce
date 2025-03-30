@@ -10,9 +10,6 @@ import { useContext } from "react";
 import { CartContext } from "../store/context/CartContext";
 
 function ProductDetails() {
-  //This returns an array by which I can know whether this item already exists in cart or not!
-  // const cartItems = useSelector((state) => state.cart.cartItems);
-  // const cart = useSelector((state) => state.cart);
   const { cart, addItemToCart } = useContext(CartContext);
 
   const params = useParams();
@@ -43,8 +40,6 @@ function ProductDetails() {
   function addToCartHandler() {
     navigate("/cart");
     if (index === -1) {
-      // dispatch(addToCart({ ...fetchedProduct, quantity: 1 }));
-      // localStorage.setItem('cart', JSON.stringify(cart));
       addItemToCart({...fetchedProduct, quantity : 1});
     }
   }
