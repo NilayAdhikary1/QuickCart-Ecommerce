@@ -1,29 +1,14 @@
 import { Button, Col, Image, ListGroup, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { addToCart, updateCartItems } from "../../store/slices/cartSlice";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../../store/context/CartContext";
 
 function CartItem({ item }) {
-  const dispatch = useDispatch();
+  const { addItemToCart, removeItemFromCart, decreaseItemFromCart } =
+    useContext(CartContext);
 
   // to get back to the details page of the product...
   const prodId = item._id;
-
-
-  function addMoreItemsToCartHandler() {
-    //I am just  sending the selected item from cartItems to the addToCart reducer...
-    dispatch(addToCart(item));
-  }
-
-  function decreaseItemFromCartHandler() {
-    //I am just sending the id of the item which I received to the updateCartItems reducer...
-    dispatch(updateCartItems({ _id: item._id, type: "decrease" }));
-  }
-  function removeElementFromCartHandler() {
-    //I am just  sending the id of the item which I received to the updateCartItems reducer...
-    dispatch(updateCartItems({ _id: item._id, type: "remove" }));
-  }
-
 
   return (
     <ListGroup.Item className="py-4">
@@ -53,7 +38,7 @@ function CartItem({ item }) {
           <div className="d-flex">
             <div className="d-flex align-items-center justify-content-end me-3">
               <Button
-                onClick={decreaseItemFromCartHandler}
+                onClick={() => decreaseItemFromCart(prodId)}
                 className="rounded-circle increase-decrease-cart-items"
                 variant="outline-secondary"
                 size="sm"
@@ -66,7 +51,7 @@ function CartItem({ item }) {
               <span className="mx-2">{item.quantity}</span>
               <Button
                 disabled={item.countInStock <= item.quantity}
-                onClick={addMoreItemsToCartHandler}
+                onClick={() => addItemToCart(item)}
                 className="rounded-circle increase-decrease-cart-items"
                 variant="outline-secondary"
                 size="sm"
@@ -77,7 +62,7 @@ function CartItem({ item }) {
               </Button>
             </div>
             <Button
-              onClick={removeElementFromCartHandler}
+              onClick={() => removeItemFromCart(prodId)}
               variant="link"
               size="sm"
               className="text-dark fw-bold text-decoration-none"

@@ -7,12 +7,12 @@ import { BASE_URL } from "../../constants.js";
 
 export const apiSlice = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials : "include" }),
   tagTypes: ["Product", "Order", "User"],
   
   refetchOnFocus: true, // after switching tab when we come back, the app refreshes automaticlly.
 
-  //   Endpoints can be queries, which return data for caching, or mutations, which send an update to the server. The endpoints are defined using a callback function that accepts a builder parameter and returns an object containing endpoint definitions created with builder.query() and builder.mutation().
+  // Endpoints can be queries, which return data for caching, or mutations, which send an update to the server. The endpoints are defined using a callback function that accepts a builder parameter and returns an object containing endpoint definitions created with builder.query() and builder.mutation().
   endpoints: () => ({}),
 });
 

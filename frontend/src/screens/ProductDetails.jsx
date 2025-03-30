@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { Card, Col, Container, Row, Image, Button } from "react-bootstrap";
 import { LuIndianRupee } from "react-icons/lu";
 import Ratings from "../components/Ratings";
@@ -7,16 +6,18 @@ import { FiShoppingBag } from "react-icons/fi";
 import { useGetSelectedProductQuery } from "../store/slices/productsSlice";
 import Loader from "../UI/Loader";
 import ErrorScreen from "./ErrorScreen";
-import { addToCart } from "../store/slices/cartSlice";
+import { useContext } from "react";
+import { CartContext } from "../store/context/CartContext";
 
 function ProductDetails() {
   //This returns an array by which I can know whether this item already exists in cart or not!
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  // const cartItems = useSelector((state) => state.cart.cartItems);
+  // const cart = useSelector((state) => state.cart);
+  const { cart, addItemToCart } = useContext(CartContext);
 
   const params = useParams();
   const prodId = params.productId;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   // Instead of using Axios for data fetching, here I have used redux RTK Query...
   const {
@@ -34,7 +35,7 @@ function ProductDetails() {
   let index = -1;
   // Now check alreday this fetchedProduct in the cart or not!!
   if (fetchedProduct) {
-    index = cartItems.findIndex(
+    index = cart.cartItems.findIndex(
       (cartItem) => cartItem._id == fetchedProduct._id
     );
   }
@@ -42,7 +43,9 @@ function ProductDetails() {
   function addToCartHandler() {
     navigate("/cart");
     if (index === -1) {
-      dispatch(addToCart({ ...fetchedProduct, quantity: 1 }));
+      // dispatch(addToCart({ ...fetchedProduct, quantity: 1 }));
+      // localStorage.setItem('cart', JSON.stringify(cart));
+      addItemToCart({...fetchedProduct, quantity : 1});
     }
   }
 

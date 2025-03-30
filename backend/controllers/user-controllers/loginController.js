@@ -7,9 +7,10 @@ import { generateToken } from "../../utils/tokenGeneration.js";
 // @route POST /account/login
 // @access Public
 export const loginUser = asyncHandler(async (req, res, next) => {
+  console.log(req.body);
   const { email, password } = req.body;
 
-  const userDoc = await User.findOne({ email: email });
+  const userDoc = await User.findOne({ email });
   if (!userDoc) {
     // email is not registered in Database...
     res.status(401);
@@ -23,7 +24,7 @@ export const loginUser = asyncHandler(async (req, res, next) => {
   }
 
   //   This is how we generate jwt tokens and set that to the res object...
-  generateToken(res, userDoc._id);
+  generateToken(res, userDoc._id.toString());
 
   res.status(200).json({
     _id: userDoc._id.toString(),

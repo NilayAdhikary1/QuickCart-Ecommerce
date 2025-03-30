@@ -1,11 +1,12 @@
 import { Button, Col, Container, Image, ListGroup, Row } from "react-bootstrap";
 import EmptyCart from "../components/cart/EmptyCart";
-import { useSelector } from "react-redux";
 import CartItem from "../components/cart/CartItem";
 import CartPrice from "../components/cart/CartPrice";
+import { useContext } from "react";
+import { CartContext } from "../store/context/CartContext";
 
 function CartScreen() {
-  const cart = useSelector((state) => state.cart);
+  const { cart } = useContext(CartContext);
   const cartItems = cart.cartItems;
 
   return (

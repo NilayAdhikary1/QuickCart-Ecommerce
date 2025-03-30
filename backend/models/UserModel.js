@@ -34,6 +34,7 @@ const userSchema = new Schema(
         state: String,
         country: String,
         postalCode: String,
+        addressesType : String, //Home, Work, Other
         isDefault: { type: Boolean, default: false }, // Mark a default address
       },
     ],

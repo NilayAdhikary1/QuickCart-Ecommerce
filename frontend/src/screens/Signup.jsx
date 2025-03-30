@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom"; // For navigation
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useLoginUserMutation } from "../store/slices/userSlice.js";
-import SIGNIN_IMG from "/images/signin.png";
 import Loader from "../UI/Loader";
-import useAuth from "../hooks/useAuth.js";
+import SIGNIN_IMG from "/images/signin.png";
+import { useRegisterUserMutation } from "../store/slices/userSlice";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { useSelector } from "react-redux";
 
-const Login = () => {
-  const [enteredInput, setEnteredInput] = useState({
+function Signup() {
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const [userData, setUserData] = useState({
+    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
-
   const { login } = useAuth();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.authStatus.isLoggedIn);
-  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const location = useLocation();
 
-  const location = useLocation(); // in location object I only need search property that contains Query string (after "?")...
   const searchParams = new URLSearchParams(location.search);
   const redirect = searchParams.get("redirect");
+
+  const isLoggedIn = useSelector((state) => state.authStatus.isLoggedIn);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -29,44 +30,60 @@ const Login = () => {
     }
   }, [isLoggedIn, navigate, redirect]);
 
-  const submitHander = async (e) => {
-    e.preventDefault();
+
+  async function submitHander(event) {
+    event.preventDefault();
+    
+    if (userData.password !== userData.confirmPassword) {
+      console.error("Passwords do not match!");
+      return;
+    }
     try {
-      const { name } = await loginUser({
-        email: enteredInput.email,
-        password: enteredInput.password,
+      const { user } = await registerUser({
+        name: userData.name,
+        email: userData.email,
+        password: userData.password,
       }).unwrap();
-      if (name) {
-        login(redirect, name);
+      if (user) {
+        login(redirect, user.name);
       }
     } catch (error) {
-      console.log(error);
+      console.log("User Registration failed!!");
+      console.log("Error : ", error);
     }
-  };
+  }
 
-  const handleInputChange = (identifier, event) => {
-    setEnteredInput((prevInput) => ({
-      ...prevInput,
+  function handleInputChange(identifier, event) {
+    setUserData((prev) => ({
+      ...prev,
       [identifier]: event.target.value,
     }));
-  };
+  }
 
   return (
     <Container fluid className="login-container d-flex align-items-center">
       {isLoading && <Loader />}
       <Row className="w-100">
         {/* Left Side - Form Section */}
-        <Col
-          md={7}
-          className="p-5 d-flex flex-column align-items-center justify-content-center"
-        >
-          <Card className="square-card login">
+        <Col md={7} className="p-5 d-flex flex-column justify-content-center">
+          <Card className="square-card register">
             <Card.Body className="d-flex flex-column justify-content-center">
               <h2 className="text-danger mb-4">QuickCart</h2>
-              <h5 className="mb-3 text-body-secondary">Welcome back !!!</h5>
-              <h1 className="fw-bold mb-4">Sign in</h1>
+              <h5 className="mb-3 text-body-secondary">Welcome!!</h5>
+              <h1 className="fw-bold mb-4">Register here</h1>
 
               <Form noValidate onSubmit={submitHander}>
+                <Form.Group className="mb-3" controlId="formName">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    className="form-control"
+                    type="text"
+                    placeholder="Enter your name"
+                    autoComplete="name"
+                    onChange={(event) => handleInputChange("name", event)}
+                    required
+                  />
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="formEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
@@ -78,7 +95,6 @@ const Login = () => {
                     required
                   />
                 </Form.Group>
-
                 <Form.Group className="mb-3" controlId="formPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
@@ -89,29 +105,36 @@ const Login = () => {
                     onChange={(event) => handleInputChange("password", event)}
                     required
                   />
-                  <div className="text-end mt-2">
-                    <Link to="/forgot-password" className="text-muted">
-                      Forgot Password?
-                    </Link>
-                  </div>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formConfirmPassword">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Control
+                    className="form-control"
+                    type="password"
+                    placeholder="Re-enter your password"
+                    autoComplete="reenter-password"
+                    onChange={(event) =>
+                      handleInputChange("confirmPassword", event)
+                    }
+                    required
+                  />
                 </Form.Group>
                 <Button
                   className="mx-auto customBtn mt-3 d-flex align-items-center justify-content-center"
                   type="submit"
                   disabled={isLoading}
                 >
-                  Sign In <span className="ms-2">→</span>
+                  Register <span className="ms-2">→</span>
                 </Button>
 
                 <p className="mt-4 text-muted">
-                  New to QuickCart? Create an account
+                  Already have an Account?
                   <Link
-                    to={
-                      redirect ? `/register?redirect=${redirect}` : "/register"
-                    }
+                    to={redirect ? `/login?redirect=${redirect}` : `/login`}
                     className="text-danger mx-2"
                   >
-                    Sign up
+                    Log in
                   </Link>
                 </p>
               </Form>
@@ -133,6 +156,6 @@ const Login = () => {
       </Row>
     </Container>
   );
-};
+}
 
-export default Login;
+export default Signup;

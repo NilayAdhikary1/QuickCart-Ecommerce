@@ -12,14 +12,16 @@ const app = express();
 
 // this is done to set up connections between backend and frontend....
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
   res.setHeader('Access-Control-Allow-Method', 'GET, POST, PATCH, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader("Access-Control-Allow-Credentials", "true"); // IMPORTANT: Allow cookies
   next();
 });
 
 // Since the user has submitted using formdata, that's why I use urlEncoded() to parse formdata...
-app.use(bodyParser.urlencoded());
+// app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 
 // now to parse the jwt saved in a cookie, we need a cookie-parser to parse that cookie from request headers...

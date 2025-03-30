@@ -1,11 +1,17 @@
 import { Button, Card } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 function CartPrice({ cart }) {
   const navigate = useNavigate();
+  const isLoggedIn = useSelector(state => state.authStatus.isLoggedIn);
 
   function proceedToCheckOutHandler(){
-    navigate('/login?')
+    if(isLoggedIn){
+      navigate('/checkout');
+    } else {
+      navigate('/login?redirect=/checkout');
+    }
   }
 
   return (
