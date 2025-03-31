@@ -8,19 +8,16 @@ import CartBadge from "../UI/CartBadge";
 import { NavDropdown } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import { useContext } from "react";
 import { CartContext } from "../store/context/CartContext";
 
 function Header() {
-  // const numberOfCartItems = useSelector((state) => state.cart.cartItems.length);
   const { cart } = useContext(CartContext);
   const numberOfCartItems = cart.cartItems.length;
   const isLoggedIn = useSelector((state) => state.authStatus.isLoggedIn);
   const userName = useSelector((state) => state.updateUserDetails?.userName?.split(" ")[0]);
 
   const { logOut } = useAuth(); // useAuth is a custom hook which helps in clearing localStorage and updating local state...
-
 
   return (
     <header>

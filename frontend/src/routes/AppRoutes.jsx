@@ -8,12 +8,13 @@ import CartScreen from "../screens/CartScreen";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import PublicRoutes from "./PublicRoutes";
+import ProtectedRoute from "./ProtectedRoute";
 import { useDispatch } from "react-redux";
 import { authUser } from "../store/slices/authSlice";
 import { setUserInfo } from "../store/slices/userInfoSlice";
+import CheckoutSteps from "../screens/CheckoutSteps";
 
 function AppRoutes() {
-
   // ✅ Restore login state from localStorage on component mount. This does not run on re-renders as dispatch does not change on every re-renders. But if the entire app relaods(page refresh), this useEffect runs again...
   // ✅ If localStorage has "isLoggedIn": "true",const isLoggedIn = "true" === "true"; which is true indeed...
   // ✅ If localStorage is missing the key(i.e. null) (or it’s anything but "true"), const isLoggedIn = "false" === "true" or null === "true"; which is false indeed...
@@ -51,6 +52,14 @@ function AppRoutes() {
               <PublicRoutes>
                 <Signup />
               </PublicRoutes>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <CheckoutSteps initialStep={2}/>
+              </ProtectedRoute>
             }
           />
         </Route>

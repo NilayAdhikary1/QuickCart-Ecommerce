@@ -70,7 +70,7 @@ const Login = () => {
                 <Form.Group className="mb-3" controlId="formEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
-                    className="form-control"
+                    className="login-form-control"
                     type="email"
                     placeholder="Enter your email"
                     autoComplete="email"
@@ -82,7 +82,7 @@ const Login = () => {
                 <Form.Group className="mb-3" controlId="formPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
-                    className="form-control"
+                    className="login-form-control"
                     type="password"
                     placeholder="Enter your password"
                     autoComplete="current-password"

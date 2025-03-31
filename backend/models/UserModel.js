@@ -28,7 +28,7 @@ const userSchema = new Schema(
     addresses: [
       {
         fullName: String,
-        phone: String,
+        // phone: String,
         street: String,
         city: String,
         state: String,

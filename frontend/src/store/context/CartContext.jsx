@@ -6,20 +6,19 @@ export const CartContext = createContext({
   addItemToCart: () => {},
   decreaseItemFromCart: () => {},
   removeItemFromCart: () => {},
+  clearCartOnLogout: () => {},
 });
-
+const initialCart = {
+  cartItems: [],
+  itemsPrice: 0,
+  shippingPrice: 0,
+  taxPrice: 0,
+  totalPrice: 0,
+};
 export default function CartContextProvider({ children }) {
   const [cart, setCart] = useState(() => {
     const storedCart = localStorage.getItem("cart");
-    return storedCart
-      ? JSON.parse(storedCart)
-      : {
-          cartItems: [],
-          itemsPrice: 0,
-          shippingPrice: 0,
-          taxPrice: 0,
-          totalPrice: 0,
-        };
+    return storedCart ? JSON.parse(storedCart) : initialCart;
   });
 
   // Sync localStorage whenever cart updates...
@@ -72,11 +71,17 @@ export default function CartContextProvider({ children }) {
     });
   };
 
+  const clearCartOnLogout = () => {
+    localStorage.removeItem("cart");
+    setCart(initialCart);
+  };
+
   const ctxVal = {
     cart,
     addItemToCart,
     decreaseItemFromCart,
     removeItemFromCart,
+    clearCartOnLogout,
   };
 
   return <CartContext.Provider value={ctxVal}>{children}</CartContext.Provider>;
