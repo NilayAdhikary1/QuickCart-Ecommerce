@@ -1,9 +1,10 @@
 import express from "express";
 import "dotenv/config";
-import { connectDb } from "./util/database.js";
+import { connectDb } from "./utils/database.js";
 import productRoute from "./routes/productRoutes.js";
 import userRoutes from './routes/userRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import bodyParser from 'body-parser';
 import cookieParser from "cookie-parser";
@@ -36,7 +37,10 @@ app.use("/products", productRoute);
 app.use('/account', userRoutes);
 
 // This middleware for admin based routes
-app.use('/admin/users', adminRoutes);
+app.use('/admin', adminRoutes);
+
+// This middleware for order based routes
+app.use('/account/orders', orderRoutes);
 
 
 // Error Handling :==================================================================

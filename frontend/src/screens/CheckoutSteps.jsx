@@ -1,14 +1,7 @@
 import { useState } from "react";
-import { Badge, ListGroup, Button } from "react-bootstrap";
-import CheckoutScreen from "./CheckoutScreen";
+import { ListGroup } from "react-bootstrap";
 import ListGroupItem from "../components/ListGroupItem";
-
-const arr = [
-  { heading: "Sign in", badgeNumber: 1 },
-  { heading: "Delivery Address", badgeNumber: 2 },
-  { heading: "Order Summary", badgeNumber: 3 },
-  { heading: "Payment Options", badgeNumber: 4 },
-];
+import { CHECKOUT_STEPS } from "../constants";
 
 function CheckoutSteps({ initialStep }) {
   const [activeStep, setActiveStep] = useState(initialStep);
@@ -19,12 +12,12 @@ function CheckoutSteps({ initialStep }) {
 
   return (
     <ListGroup className="gap-3" as="ol">
-      {arr.map((item, index) => (
+      {CHECKOUT_STEPS.map((item, index) => (
         <ListGroupItem
           key={index}
           handleChange={handleChange}
           activeStep={activeStep}
-          heading={item.heading}
+          title={item.title}
           badgeNumber={item.badgeNumber}
         />
       ))}

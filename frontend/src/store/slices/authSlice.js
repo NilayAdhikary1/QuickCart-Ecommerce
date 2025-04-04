@@ -1,15 +1,26 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+    isLoggedIn : localStorage.getItem("isLoggedIn") === "true"
+}
+
 export const authSlice = createSlice({
     name : 'authStatus',
-    initialState : {isLoggedIn : false},
+    initialState ,
     reducers : {
-        authUser(state, action){
-            state.isLoggedIn = action.payload.isLoggedIn;
+        setAuthState(state, action){
+            state.isLoggedIn = action.payload;
         },
     }
 });
 
-export const { authUser } = authSlice.actions;
+export const { setAuthState } = authSlice.actions;
+
+// Thunk action to update LocalStorage and Redux...
+export const authUser = (isLoggedIn) => (dispatch) => {
+    localStorage.setItem("isLoggedIn", isLoggedIn);
+    dispatch(setAuthState(isLoggedIn));
+}
+
 export default authSlice.reducer;

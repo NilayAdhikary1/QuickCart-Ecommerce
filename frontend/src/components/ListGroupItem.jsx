@@ -1,13 +1,10 @@
 import { Badge, Button, ListGroup } from "react-bootstrap";
 import CheckoutScreen from "../screens/CheckoutScreen";
 import LogInDetails from "./LogInDetails";
+import PaymentScreen from "../screens/PaymentScreen";
+import OrderSummaryScreen from "../screens/OrderSummaryScreen";
 
-function ListGroupItem({
-  handleChange,
-  activeStep,
-  badgeNumber,
-  heading,
-}) {
+function ListGroupItem({ handleChange, activeStep, badgeNumber, title }) {
   // activeStep !== badgeNumber
   return (
     <>
@@ -22,13 +19,13 @@ function ListGroupItem({
           <Badge className="ms-1 me-2" bg="secondary">
             {badgeNumber}
           </Badge>
-          <span>{heading}</span>
+          <span>{title}</span>
         </div>
         {activeStep > badgeNumber && (
           <Button
             className="bg-white text-primary fw-bold rounded-0 px-4 py-2 border"
             variant="outline-secondary"
-            onClick={() => handleChange(1)}
+            onClick={() => handleChange(badgeNumber)}
           >
             Change
           </Button>
@@ -52,17 +49,12 @@ function ListGroupItem({
             />
           )}
           {activeStep === 3 && (
-            <LogInDetails
+            <OrderSummaryScreen
               handleGoToNextStep={handleChange}
               currentStep={badgeNumber}
             />
           )}
-          {activeStep === 4 && (
-            <LogInDetails
-              handleGoToNextStep={handleChange}
-              currentStep={badgeNumber}
-            />
-          )}
+          {activeStep === 4 && <PaymentScreen />}
         </ListGroup.Item>
       )}
     </>

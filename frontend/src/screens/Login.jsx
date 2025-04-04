@@ -24,8 +24,8 @@ const Login = () => {
   const redirect = searchParams.get("redirect");
 
   useEffect(() => {
-    if (isLoggedIn) {
-      navigate(redirect);
+    if (isLoggedIn && redirect) {
+      navigate(redirect); // ✅ Only navigate after Redux updates
     }
   }, [isLoggedIn, navigate, redirect]);
 
@@ -37,8 +37,9 @@ const Login = () => {
         password: enteredInput.password,
       }).unwrap();
       if (name) {
-        login(redirect, name);
+        login(name);
       }
+      navigate(redirect);
     } catch (error) {
       console.log(error);
     }
