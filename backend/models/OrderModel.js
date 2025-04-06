@@ -30,6 +30,7 @@ const orderSchema = new Schema(
       country: { type: String, required: true },
       state: { type: String, required: true },
       postalCode: { type: Number, required: true },
+      landmark: { type: String }
     },
     paymentMethod: {
       type: String,

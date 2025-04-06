@@ -10,12 +10,12 @@ function useAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { clearCartOnLogout } = useContext(CartContext);
-  const [logOutApiCall] = useLogOutUserMutation();
+  const [ logOutApiCall ] = useLogOutUserMutation();
 
   // ✅ Helps user to store log in as well as sign up details in localStorage and redux...
-  const login = (name) => {
+  const login = (userInfo) => {
     dispatch(authUser(true));
-    dispatch(setUserInfo(name));
+    dispatch(setUserInfo(userInfo));
   };
 
   // ✅ Helps in clearing out localStorage as well as redux store...

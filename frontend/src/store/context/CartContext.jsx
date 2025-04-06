@@ -7,6 +7,7 @@ export const CartContext = createContext({
   decreaseItemFromCart: () => {},
   removeItemFromCart: () => {},
   clearCartOnLogout: () => {},
+  emptyCartAfterOrder: () => {},
 });
 const initialCart = {
   cartItems: [],
@@ -71,6 +72,11 @@ export default function CartContextProvider({ children }) {
     });
   };
 
+  const emptyCartAfterOrder = () => {
+    // here we don't remove the localstorage just updating the cart to the old one...
+    setCart(initialCart);
+  }
+
   const clearCartOnLogout = () => {
     localStorage.removeItem("cart");
     setCart(initialCart);
@@ -82,6 +88,7 @@ export default function CartContextProvider({ children }) {
     decreaseItemFromCart,
     removeItemFromCart,
     clearCartOnLogout,
+    emptyCartAfterOrder
   };
 
   return <CartContext.Provider value={ctxVal}>{children}</CartContext.Provider>;

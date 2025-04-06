@@ -1,13 +1,18 @@
-import { Button } from "react-bootstrap";
+import { Button, Col, ListGroup } from "react-bootstrap";
+import CartItem from "../components/cart/CartItem";
+import { useSelector } from "react-redux";
 
-function OrderSummaryScreen({ handleGoToNextStep, currentStep }) {
+function OrderSummaryScreen() {
+  const checkoutCartItems = useSelector(
+    (state) => state.checkoutDetails.checkoutCart.cartItems
+  );
+  
   return (
-    <div>
-      <h1>This is my order summary...</h1>
-      <Button onClick={() => handleGoToNextStep(currentStep + 1)}>
-        Go to payment page...
-      </Button>
-    </div>
+    <ListGroup variant="flush">
+      {checkoutCartItems.map((item) => (
+        <CartItem key={item._id} item={item} />
+      ))}
+    </ListGroup>
   );
 }
 

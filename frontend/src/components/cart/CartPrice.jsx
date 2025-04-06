@@ -1,16 +1,16 @@
 import { Button, Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-function CartPrice({ cart }) {
+function CartPrice({ cart, showCheckoutButton = true }) {
   const navigate = useNavigate();
-  const isLoggedIn = useSelector(state => state.authStatus.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.authStatus.isLoggedIn);
 
-  function proceedToCheckOutHandler(){
-    if(isLoggedIn){
-      navigate('/checkout');
+  function proceedToCheckOutHandler() {
+    if (isLoggedIn) {
+      navigate("/checkout");
     } else {
-      navigate('/login?redirect=/checkout');
+      navigate("/login?redirect=/checkout");
     }
   }
 
@@ -21,20 +21,22 @@ function CartPrice({ cart }) {
         {/* .......... Product Price ............ */}
         <div className="d-flex justify-content-between  mb-2">
           <span>Price (2 items)</span>
-          <span>₹{cart.itemsPrice.toLocaleString()}</span>
+          <span>₹{cart?.itemsPrice.toLocaleString()}</span>
         </div>
 
         {/* ........TAX PRICE............ */}
         <div className="d-flex justify-content-between  mb-2 ">
-          <span>Tax{" "}(15%)</span>
-          <span> ₹{cart.taxPrice.toLocaleString()}</span>
+          <span>Tax (15%)</span>
+          <span> ₹{cart?.taxPrice.toLocaleString()}</span>
         </div>
 
         {/* .......Delivery Charges....... */}
         <div className="d-flex justify-content-between  mb-2 ">
           <span>Delivery Charges</span>
           <span className="text-success">
-            <s className="text-muted">₹{cart.shippingPrice.toLocaleString()}</s>{" "}
+            <s className="text-muted">
+              ₹{cart?.shippingPrice.toLocaleString()}
+            </s>{" "}
             Free
           </span>
         </div>
@@ -43,22 +45,23 @@ function CartPrice({ cart }) {
         <hr />
         <div className="d-flex justify-content-between fw-bold fs-5 mb-4">
           <span>Total Amount</span>
-          <span>₹{cart.totalPrice.toLocaleString()}</span>
+          <span>₹{cart?.totalPrice.toLocaleString()}</span>
         </div>
-
-        <div className="d-grid">
-          <Button
-          onClick={proceedToCheckOutHandler}
-            style={{
-              backgroundColor: "rgb(235, 54, 93)",
-              borderColor: "rgb(235, 54, 93)",
-            }}
-            size="lg"
-            className="rounded-0"
-          >
-            Place Order
-          </Button>
-        </div>
+        {showCheckoutButton && (
+          <div className="d-grid">
+            <Button
+              onClick={proceedToCheckOutHandler}
+              style={{
+                backgroundColor: "rgb(235, 54, 93)",
+                borderColor: "rgb(235, 54, 93)",
+              }}
+              size="lg"
+              className="rounded-0"
+            >
+              Place Order
+            </Button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   );

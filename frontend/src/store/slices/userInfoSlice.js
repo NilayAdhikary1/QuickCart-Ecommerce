@@ -1,31 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userName: localStorage.getItem("userName") || "",
+  userDetails: JSON.parse(localStorage.getItem("userDetails")) || "",
 };
 
 const updateUserDetailsSlice = createSlice({
-  name: "updateUserDetails",
+  name: "currentlyActiveUser",
   initialState,
   reducers: {
-    setUserName: (state, action) => {
-      state.userName = action.payload;
+    setUserDetails: (state, action) => {
+      state.userDetails = action.payload;
     },
   },
 });
 
-export const { setUserName } = updateUserDetailsSlice.actions;
+export const { setUserDetails } = updateUserDetailsSlice.actions;
 
 // Thunk action to update LocalStorage and Redux...
-export const setUserInfo = (userName) => (dispatch) => {
-  localStorage.setItem("userName", userName);
-  dispatch(setUserName(userName));
+export const setUserInfo = (userDetails) => (dispatch) => {
+  localStorage.setItem("userDetails", JSON.stringify(userDetails));
+  dispatch(setUserDetails(userDetails));
 };
 
 // Thunk action to clear localStorage and redux state...
 export const clearUserInfo = () => (dispatch) => {
-  localStorage.removeItem("userName");
-  dispatch(setUserName(""));
+  localStorage.removeItem("userDetails");
+  dispatch(setUserDetails(""));
 };
 
 export default updateUserDetailsSlice.reducer;

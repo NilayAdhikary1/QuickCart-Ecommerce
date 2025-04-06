@@ -6,7 +6,10 @@ import { MdStarRate } from "react-icons/md";
 import useAuth from "../hooks/useAuth";
 
 function LogInDetails({ handleGoToNextStep, currentStep }) {
-  const userName = useSelector((state) => state.updateUserDetails?.userName);
+  // const userName = useSelector((state) => state.updateUserDetails?.userName);
+  const userName = useSelector(
+    (state) => state.currentlyActiveUser?.userDetails?.name
+  );
   const { logOut } = useAuth();
 
   return (

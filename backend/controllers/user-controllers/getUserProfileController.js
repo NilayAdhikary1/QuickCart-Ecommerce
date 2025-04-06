@@ -10,5 +10,5 @@ export const getUserProfile = (req, res, next) => {
     res.status(200).json({
         message : "Check Your User Profile",
         user : userObj
-    })
+    });
 }

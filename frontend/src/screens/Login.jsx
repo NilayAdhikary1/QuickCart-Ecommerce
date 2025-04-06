@@ -32,12 +32,16 @@ const Login = () => {
   const submitHander = async (e) => {
     e.preventDefault();
     try {
-      const { name } = await loginUser({
+      const { name, email } = await loginUser({
         email: enteredInput.email,
         password: enteredInput.password,
       }).unwrap();
-      if (name) {
-        login(name);
+      if (name && email) {
+        const userInfo = {
+          name,
+          email,
+        };
+        login(userInfo);
       }
       navigate(redirect);
     } catch (error) {

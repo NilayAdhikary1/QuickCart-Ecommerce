@@ -1,14 +1,18 @@
+import { thunk } from "redux-thunk";
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./slices/apiSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
+
+// local state slices...
 import authReducer from "./slices/authSlice";
-import updateUserDetailsReducer from "./slices/userInfoSlice";
-import { thunk } from "redux-thunk";
+import currentlyActiveUserReducer from "./slices/userInfoSlice";
+import { checkoutSlice } from './slices/checkoutSlice';
 
 const store = configureStore({
   reducer: {
     authStatus: authReducer,
-    updateUserDetails: updateUserDetailsReducer,
+    currentlyActiveUser: currentlyActiveUserReducer,
+    checkoutDetails : checkoutSlice.reducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
